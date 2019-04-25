@@ -111,3 +111,9 @@ miscellaneous:
         google_plus:
     links:
         Hexo: http://hexo.io
+
+#统计阅读量
+leancloud_visitors:
+    enable: true
+    app_id: 7ec1wQwAA8MKNjVDnXDbBRtx-gzGzoHsz
+    app_key: IPesc54T2AsK2QX09b2NjVcA
