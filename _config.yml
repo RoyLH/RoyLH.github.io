@@ -72,12 +72,12 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
-plugins:
-- hexo-generator-sitemap
+# plugins:
+# - hexo-generator-sitemap
 
 sitemap:
     path: sitemap.xml
-    
+
 baidusitemap:
 path: baidusitemap.xml
 
