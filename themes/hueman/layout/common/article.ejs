@@ -10,8 +10,11 @@
                 <%- partial('post/date', { class_name: 'article-date', date_format: null }) %>
 		<%- partial('post/author') %>
                 <%- partial('post/tag') %>
-                <!---cloud阅读量统计系统-->
+                <!---learncloud阅读量统计系统-->
                 阅读数量:<span id="<%= url_for(post.path) %>" class="leancloud_visitors" data-flag-title="<%- post.title %>"></span>次
+                <span id="busuanzi_container_page_pv">
+                    阅读量<span id="busuanzi_value_page_pv"></span>次
+                </span>
             </div>
         <% } %>
         <%- partial('post/gallery') %>
