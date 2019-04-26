@@ -22,7 +22,7 @@ customize:
         google-plus: /
         github: https://github.com/ppoffice/hexo-theme-hueman
         weibo: /
-        rss: /
+        rss: /atom.xml
 
 # Widgets
 widgets:
@@ -91,8 +91,8 @@ share: default # options: jiathis, bdshare, addtoany, default
 plugins:
     lightgallery: true # options: true, false
     justifiedgallery: true # options: true, false
-    google_analytics: # enter the tracking ID for your Google Analytics
-    baidu_analytics: # enter Baidu Analytics hash key
+    google_analytics: # enter the tracking ID for your Google Analytics 输入您的Google Analytics（分析）的跟踪ID
+    baidu_analytics: # enter Baidu Analytics hash key 输入百度分析哈希键
     bing_site_verification: # enter Bing verification key here
     statcounter:
       sc_project: # enter statcounter project id

@@ -72,13 +72,15 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: hueman
+plugins:
+- hexo-generator-sitemap
 
 sitemap:
     path: sitemap.xml
+    
 baidusitemap:
 path: baidusitemap.xml
+
 feed:
   type: atom
   path: atom.xml
@@ -87,6 +89,9 @@ feed:
   content:
   content_limit: 140
   content_limit_delim: ' '
+
+## Themes: https://hexo.io/themes/
+theme: hueman
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
