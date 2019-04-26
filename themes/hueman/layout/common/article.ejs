@@ -10,11 +10,13 @@
                 <%- partial('post/date', { class_name: 'article-date', date_format: null }) %>
 		<%- partial('post/author') %>
                 <%- partial('post/tag') %>
-                <!---learncloud阅读量统计系统-->
+                <!---方法一 leancloud阅读量统计系统-->
                 阅读数量:<span id="<%= url_for(post.path) %>" class="leancloud_visitors" data-flag-title="<%- post.title %>"></span>次
-                <span id="busuanzi_container_page_pv">
+
+                <!--方法二 不蒜子单页面访问量统计 也就是该文章的阅读量-->
+                <!-- <span id="busuanzi_container_page_pv">
                     阅读量<span id="busuanzi_value_page_pv"></span>次
-                </span>
+                </span> -->
             </div>
         <% } %>
         <%- partial('post/gallery') %>
