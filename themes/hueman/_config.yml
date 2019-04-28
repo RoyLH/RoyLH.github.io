@@ -17,11 +17,11 @@ customize:
     thumbnail: true # enable posts thumbnail, options: true, false
     favicon: favicon.ico # path to favicon
     social_links: # for more icons, please see http://fontawesome.io/icons/#brand
-        twitter: /
-        facebook: /
-        google-plus: /
-        github: https://github.com/ppoffice/hexo-theme-hueman
-        weibo: /
+        twitter: https://twitter.com/RoyCook123
+        facebook: https://www.facebook.com/profile.php?id=100028962664645
+        google-plus: https://mashable.com/category/google-plus/
+        github: https://github.com/RoyLH
+        weibo: https://weibo.com/u/3179353285
         rss: /atom.xml
 
 # Widgets
