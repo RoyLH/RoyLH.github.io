@@ -15,7 +15,7 @@ timezone:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://roy-cook.tech
 root: /
-permalink: posts/:abbrlink/
+permalink: :category/posts/:abbrlink/
 permalink_defaults:
 
 # Directory
