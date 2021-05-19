@@ -98,5 +98,5 @@ theme: hueman
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:RoyLH/RoyLH.github.io.git
+  repo: git@github.com:roy-cook/RoyLH.github.io.git
   branch: master
