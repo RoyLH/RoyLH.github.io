@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装 | RoyCook的个人博客 | 前端 node.js</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="持续集成,自动化">
+    
+    <meta name="description" content="常用镜像安装准备 1. 安装任务列表   应用程序 对应端口映射 （本机：docker容器）     jenkins 8080  ： 8080            mysql 3306  ： 3306           mongo 27017 ： 27017         redis 6379  ： 6379         nginx 8765  ： 80          2. 在阿里">
+<meta name="keywords" content="持续集成,自动化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装">
+<meta property="og:url" content="https://roy-cook.tech/自动化/持续集成/posts/14787.html">
+<meta property="og:site_name" content="RoyCook的个人博客 | 前端 node.js">
+<meta property="og:description" content="常用镜像安装准备 1. 安装任务列表   应用程序 对应端口映射 （本机：docker容器）     jenkins 8080  ： 8080            mysql 3306  ： 3306           mongo 27017 ： 27017         redis 6379  ： 6379         nginx 8765  ： 80          2. 在阿里">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg">
+<meta property="og:updated_time" content="2021-06-25T07:44:13.721Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装">
+<meta name="twitter:description" content="常用镜像安装准备 1. 安装任务列表   应用程序 对应端口映射 （本机：docker容器）     jenkins 8080  ： 8080            mysql 3306  ： 3306           mongo 27017 ： 27017         redis 6379  ： 6379         nginx 8765  ： 80          2. 在阿里">
+<meta name="twitter:image" content="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="RoyCook的个人博客 | 前端 node.js" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+    <!-- 百度统计 -->
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e54e26d9b98587550b2ed7dcf4ebf657";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">RoyCook&#39;s coding world!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/APP/">APP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/APP/React-Native/">React Native</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Node-js/">Node.js</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/">WEB安全</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/SSL/">SSL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web前端/">Web前端</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web前端/JavaScript/">JavaScript</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/前端自动化/">前端自动化</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/前端自动化/前端工程化/">前端工程化</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/博客搭建/">博客搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/版本控制/">版本控制</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/版本控制/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/自动化/">自动化</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/自动化/持续集成/">持续集成</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/自动化/">自动化</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/自动化/持续集成/">持续集成</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-自动化构建2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/自动化/持续集成/posts/14787.html" class="article-date">
+            <time datetime="2019-03-01T03:27:52.000Z" itemprop="datePublished">2019-03-01</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/持续集成/">持续集成</a>, <a class="tag-link" href="/tags/自动化/">自动化</a>
+    </div>
+
+                <!---方法一 leancloud阅读量统计系统-->
+                阅读数量:<span id="/自动化/持续集成/posts/14787.html" class="leancloud_visitors" data-flag-title="Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装"></span>次
+
+                <!--方法二 不蒜子单页面访问量统计 也就是该文章的阅读量-->
+                <!-- <span id="busuanzi_container_page_pv">
+                    阅读量<span id="busuanzi_value_page_pv"></span>次
+                </span> -->
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg" alt></p>
+<h2 id="常用镜像安装准备"><a href="#常用镜像安装准备" class="headerlink" title="常用镜像安装准备"></a>常用镜像安装准备</h2><hr>
+<h4 id="1-安装任务列表"><a href="#1-安装任务列表" class="headerlink" title="1. 安装任务列表"></a>1. 安装任务列表</h4><table>
+<thead>
+<tr>
+<th>应用程序</th>
+<th>对应端口映射 （本机：docker容器）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jenkins</td>
+<td>8080  ： 8080         </td>
+</tr>
+<tr>
+<td>mysql</td>
+<td>3306  ： 3306        </td>
+</tr>
+<tr>
+<td>mongo</td>
+<td>27017 ： 27017      </td>
+</tr>
+<tr>
+<td>redis</td>
+<td>6379  ： 6379      </td>
+</tr>
+<tr>
+<td>nginx</td>
+<td>8765  ： 80      </td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-在阿里云后台添加以上应用的安全组信息"><a href="#2-在阿里云后台添加以上应用的安全组信息" class="headerlink" title="2. 在阿里云后台添加以上应用的安全组信息"></a>2. 在阿里云后台添加以上应用的安全组信息</h4><p>略</p>
+<h4 id="3-在ECS服务器上创建创建如下目录"><a href="#3-在ECS服务器上创建创建如下目录" class="headerlink" title="3. 在ECS服务器上创建创建如下目录"></a>3. 在ECS服务器上创建创建如下目录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">cd /home</span><br><span class="line">sudo mkdir docker_home</span><br><span class="line">&lt;!--这个docker_home文件夹用来存放docker安装的所有应用程序的所有文件--&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--也就是宿主机上将要映射到容器的宿主机目录 --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--比如下面的jenkins目录 之后jenkins的一些配置文件都将会存储到该目录下--&gt;</span><br><span class="line"></span><br><span class="line">|-- docker_home</span><br><span class="line">    |-- jenkins</span><br><span class="line">    |</span><br><span class="line">    |-- mongo</span><br><span class="line">    |   |-- data</span><br><span class="line">    |       |-- configdb</span><br><span class="line">    |       |-- db</span><br><span class="line">    |</span><br><span class="line">    |-- mysql</span><br><span class="line">    |   |-- conf</span><br><span class="line">    |   |-- data</span><br><span class="line">    |   |-- logs</span><br><span class="line">    |</span><br><span class="line">    |-- nginx</span><br><span class="line">    |   |-- config</span><br><span class="line">    |       |-- conf.d</span><br><span class="line">    |       |-- default.conf</span><br><span class="line">    |       |-- nginx.conf</span><br><span class="line">    |   |-- logs</span><br><span class="line">    |   |-- ssl</span><br><span class="line">    |</span><br><span class="line">    |-- redis</span><br><span class="line">    |   |-- data</span><br><span class="line">    |</span><br><span class="line">    |-- adminmongo</span><br><span class="line">    </span><br><span class="line">        </span><br><span class="line">default.conf nginx.conf两个重要nginx源文件 最好能提前准备好 </span><br><span class="line">也可以在docker run 的时候不挂载，</span><br><span class="line">成功启动nginx后，通过</span><br><span class="line">sudo docker cp [containerId]/etc/nginx/nginx.conf /home/docker_home/nginx/config/nginx.conf </span><br><span class="line">这种形式复制nginx镜像中的源文件到本地相应文件夹 </span><br><span class="line"></span><br><span class="line">再停止和删除nginx容器（必要的操作）</span><br><span class="line">重新docker run 命令挂载</span><br><span class="line"></span><br><span class="line">但是考虑到这两个文件一般都是有标准模板可以轻易找到 </span><br><span class="line">还是自行准备比较好 避免麻烦</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="一-ubuntu下安装docker版jenkins"><a href="#一-ubuntu下安装docker版jenkins" class="headerlink" title="(一) ubuntu下安装docker版jenkins"></a>(一) ubuntu下安装docker版jenkins</h2><hr>
+<h4 id="1-使用下面的命令拉取jenkins的docker镜像，这里我是用的是lts的长期支持版本，你可以到jenkins官网自由选择其他版本"><a href="#1-使用下面的命令拉取jenkins的docker镜像，这里我是用的是lts的长期支持版本，你可以到jenkins官网自由选择其他版本" class="headerlink" title="1. 使用下面的命令拉取jenkins的docker镜像，这里我是用的是lts的长期支持版本，你可以到jenkins官网自由选择其他版本"></a>1. 使用下面的命令拉取jenkins的docker镜像，这里我是用的是lts的长期支持版本，你可以到jenkins官网自由选择其他版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search jenkins</span><br><span class="line">sudo docker pull jenkins/jenkins:lts</span><br></pre></td></tr></table></figure>
+<h4 id="2-设置宿主机映射目录的所有者和所属的组"><a href="#2-设置宿主机映射目录的所有者和所属的组" class="headerlink" title="2. 设置宿主机映射目录的所有者和所属的组"></a>2. 设置宿主机映射目录的所有者和所属的组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R 1000:1000 /home/docker_home/jenkins</span><br></pre></td></tr></table></figure>
+<h4 id="3-启动jenkins的docker镜像，并设置相关参数"><a href="#3-启动jenkins的docker镜像，并设置相关参数" class="headerlink" title="3. 启动jenkins的docker镜像，并设置相关参数"></a>3. 启动jenkins的docker镜像，并设置相关参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -u root \</span><br><span class="line">  -v /home/docker_home/jenkins:/var/jenkins_home \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  -v /usr/bin/docker:/usr/bin/docker \</span><br><span class="line">  -v /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7 \</span><br><span class="line">  -v /opt:/opt \</span><br><span class="line">  -v /etc/timezone:/etc/timezone jenkins/jenkins:lts</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong><em>==-d== 表示以后台模式运行</em></strong></p>
+</li>
+<li><p><strong><em>==–name== 为容器定义一个名字（后面可以代替容器id使用）</em></strong></p>
+</li>
+<li><p><strong><em>==-p== 表示映射容器的端口到宿主机的端口</em></strong></p>
+</li>
+<li><p><strong><em>==-u root== 使用root用户运行，避免后面出现的一些执行权限问题</em></strong></p>
+</li>
+<li><p><strong><em>==-v== 表示映射宿主机的目录到容器的目录</em></strong></p>
+</li>
+<li><p><strong><em>==-v /home/jenkins_home:/var/jenkins_home== 映射jenkins_home，将数据存储到宿主机，这样配置就不会随容器丢失</em></strong></p>
+</li>
+<li><p><strong><em>==-v /var/run/docker.sock:/var/run/docker.sock== 与 ==-v /usr/bin/docker:/usr/bin/docker== 把宿主机docker 映射到容器内，可以直接在容器内使用宿主机docker</em></strong></p>
+</li>
+<li><p><strong><em>==-v /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7==  容器内docker运行需要的库文件</em></strong></p>
+</li>
+<li><p><strong><em>==-v /opt:/opt==  自主安装的一些运行时软件（如java/maven/git…）</em></strong></p>
+</li>
+<li><p><strong><em>==-v /etc/timezone:/etc/timezone== 映射时区文件，保证容器的时区和宿主机相同（官网的jenkins容器时区不是中国的时区）</em></strong></p>
+</li>
+</ul>
+<hr>
+<h4 id="4-容器启动后，就可以访问ip-8080看到jenkins首次运行的首页了，然后通过下面命令查看初始密码，填入之后跳转到安装插件的页面，选择第一个就好，会默认安装一些插件"><a href="#4-容器启动后，就可以访问ip-8080看到jenkins首次运行的首页了，然后通过下面命令查看初始密码，填入之后跳转到安装插件的页面，选择第一个就好，会默认安装一些插件" class="headerlink" title="4. 容器启动后，就可以访问ip:8080看到jenkins首次运行的首页了，然后通过下面命令查看初始密码，填入之后跳转到安装插件的页面，选择第一个就好，会默认安装一些插件"></a>4. 容器启动后，就可以访问ip:8080看到jenkins首次运行的首页了，然后通过下面命令查看初始密码，填入之后跳转到安装插件的页面，选择第一个就好，会默认安装一些插件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cat /home/docker_home/jenkins/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+<h4 id="5-跳转到创建用户和密码的界面，创建好后，jenkins的安装也就到此结束了"><a href="#5-跳转到创建用户和密码的界面，创建好后，jenkins的安装也就到此结束了" class="headerlink" title="5. 跳转到创建用户和密码的界面，创建好后，jenkins的安装也就到此结束了"></a>5. 跳转到创建用户和密码的界面，创建好后，jenkins的安装也就到此结束了</h4><h2 id="二-ubuntu下安装docker版nginx"><a href="#二-ubuntu下安装docker版nginx" class="headerlink" title="(二) ubuntu下安装docker版nginx"></a>(二) ubuntu下安装docker版nginx</h2><h4 id="1-使用下面的命令拉取nginx的docker镜像"><a href="#1-使用下面的命令拉取nginx的docker镜像" class="headerlink" title="1. 使用下面的命令拉取nginx的docker镜像"></a>1. 使用下面的命令拉取nginx的docker镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search nignx</span><br><span class="line">sudo docker pull nginx</span><br></pre></td></tr></table></figure>
+<h4 id="2-启动nignx的docker镜像，并设置相关参数，创建容器"><a href="#2-启动nignx的docker镜像，并设置相关参数，创建容器" class="headerlink" title="2.  启动nignx的docker镜像，并设置相关参数，创建容器"></a>2.  启动nignx的docker镜像，并设置相关参数，创建容器</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run --detach --name nginx -p 80:80 -p 443:443 \</span><br><span class="line">-v /home/docker_home/nginx/data:/usr/share/nginx/html \</span><br><span class="line">-v /home/docker_home/nginx/config/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">-v /home/docker_home/nginx/config/conf.d:/etc/nginx/conf.d \</span><br><span class="line">-v /home/docker_home/nginx/logs:/var/log/nginx \</span><br><span class="line">-v /home/docker_home/nginx/ssl:/ssl \</span><br><span class="line">-d nginx</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="3-使用想要进入交互式终端，使用如下命令"><a href="#3-使用想要进入交互式终端，使用如下命令" class="headerlink" title="3. 使用想要进入交互式终端，使用如下命令"></a>3. 使用想要进入交互式终端，使用如下命令</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it nginx /bin/bash</span><br></pre></td></tr></table></figure>
+<h2 id="三-ubuntu下安装docker版mysql"><a href="#三-ubuntu下安装docker版mysql" class="headerlink" title="(三) ubuntu下安装docker版mysql"></a>(三) ubuntu下安装docker版mysql</h2><hr>
+<h4 id="1-使用下面的命令拉取mysql的docker镜像，我这里安装mysql5-6版本"><a href="#1-使用下面的命令拉取mysql的docker镜像，我这里安装mysql5-6版本" class="headerlink" title="1. 使用下面的命令拉取mysql的docker镜像，我这里安装mysql5.6版本"></a>1. 使用下面的命令拉取mysql的docker镜像，我这里安装mysql5.6版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search mysql</span><br><span class="line">sudo docker pull mysql:5.6</span><br></pre></td></tr></table></figure>
+<h4 id="2-启动mysql的docker镜像，并设置相关参数"><a href="#2-启动mysql的docker镜像，并设置相关参数" class="headerlink" title="2. 启动mysql的docker镜像，并设置相关参数"></a>2. 启动mysql的docker镜像，并设置相关参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/docker_home/mysql/conf</span><br><span class="line">vi my.cnf</span><br><span class="line">&lt;!--wq!保存--&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -p 3306:3306 --name mysql \</span><br><span class="line">-v /home/docker_home/mysql/conf/my.cnf:/etc/mysql/my.cnf \</span><br><span class="line">-v /home/docker_home/mysql/logs:/logs \</span><br><span class="line">-v /home/docker_home/mysql/data:/var/lib/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=your_password \</span><br><span class="line">-d mysql:5.6</span><br></pre></td></tr></table></figure>
+<p>命令说明：</p>
+<p><em>/home/docker_home/mysql/data目录将映射为mysql容器配置的数据文件存放路径</em></p>
+<p><em>/home/docker_home/mysql/logs目录将映射为mysql容器的日志目录</em></p>
+<p><em>/home/docker_home/mysql/conf目录里的配置文件将映射为mysql容器的配置文件</em></p>
+<ul>
+<li><p><strong><em>==-p 3306:3306==：将容器的 3306 端口映射到主机的 3306 端口</em></strong></p>
+</li>
+<li><p><strong><em>==-v -v /home/docker_home/mysql/conf/my.cnf:/etc/mysql/my.cnf==：将主机的 /home/docker_home/mysql/conf/my.cnf挂载到容器的 /etc/mysql/my.cnf文件</em></strong></p>
+</li>
+<li><p><strong><em>==-v /home/docker_home/mysql/logs==:/logs：将主机/home/docker_home/mysql/logs 目录挂载到容器的 /logs</em></strong></p>
+</li>
+<li><p><strong><em>==-v /home/docker_home/mysql/data:/var/lib/mysql==：将主机/home/docker_home/mysql/data目录挂载到容器的 /var/lib/mysql</em></strong></p>
+</li>
+<li><p><strong><em>==-e MYSQL_ROOT_PASSWORD=123456==：初始化 root 用户的密码</em></strong></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps</span><br><span class="line">&lt;!--存在mysql的容器 运行正常--&gt;</span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<p>此时便可以在客户端使用shell或者Navicat等工具进行远程访问</p>
+<h4 id="3-进入容器操作"><a href="#3-进入容器操作" class="headerlink" title="3. 进入容器操作"></a>3. 进入容器操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it mysql env LANG=C.UTF-8 bash</span><br><span class="line">&lt;!--其中 env LANG=C.UTF-8 bash 让docker命令行支持中文--&gt;</span><br><span class="line"></span><br><span class="line">cp /usr/my.cnf /etc/mysql/my.cnf</span><br><span class="line"></span><br><span class="line">mysql -u root -p 123gogogo</span><br><span class="line"></span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+<h3 id="4-退出mysql，退出docker"><a href="#4-退出mysql，退出docker" class="headerlink" title="4. 退出mysql，退出docker"></a>4. 退出mysql，退出docker</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--修改my.cnf配置文件--&gt;</span><br><span class="line">sudo vi /home/docker_home/mysql/conf/my.cnf</span><br><span class="line">&lt;!--加入--&gt;</span><br><span class="line">[client] default-character-set=utf8 </span><br><span class="line">[mysql] default-character-set=utf8 </span><br><span class="line">[mysqld] character-set-server=utf8</span><br><span class="line">&lt;!--重启mysql容器--&gt;</span><br><span class="line">docker restart mysql</span><br></pre></td></tr></table></figure>
+<h3 id="5-添加远程登录用户"><a href="#5-添加远程登录用户" class="headerlink" title="5. 添加远程登录用户"></a>5. 添加远程登录用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CREATE USER &apos;roy&apos;@&apos;%&apos; IDENTIFIED WITH mysql_native_password BY &apos;123gogogo!&apos;;</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO &apos;roy&apos;@&apos;%&apos;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="四-ubuntu下安装docker版mongodb"><a href="#四-ubuntu下安装docker版mongodb" class="headerlink" title="(四) ubuntu下安装docker版mongodb"></a>(四) ubuntu下安装docker版mongodb</h2><hr>
+<h4 id="1-使用下面的命令拉取Docker-Hub上的mongo镜像"><a href="#1-使用下面的命令拉取Docker-Hub上的mongo镜像" class="headerlink" title="1. 使用下面的命令拉取Docker Hub上的mongo镜像"></a>1. 使用下面的命令拉取Docker Hub上的mongo镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search mongo</span><br><span class="line">sudo docker pull mongo</span><br></pre></td></tr></table></figure>
+<h4 id="2-启动mongo的docker镜像，并设置相关参数"><a href="#2-启动mongo的docker镜像，并设置相关参数" class="headerlink" title="2. 启动mongo的docker镜像，并设置相关参数"></a>2. 启动mongo的docker镜像，并设置相关参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name mongo -p 27017:27017 -v /home/docker_home/mongo/data/configdb:/data/configdb -v /home/docker_home/mongo/data/db:/data/db -d mongo --auth</span><br></pre></td></tr></table></figure>
+<p>命令说明：</p>
+<ul>
+<li><p><strong><em>==-p 27017:27017==：将容器的 27017 端口映射到主机的 27017 端口</em></strong></p>
+</li>
+<li><p><strong><em>==-v /home/docker_home/mongo/data/configdb:/data/configdb==：将宿主机/home/docker_home/mongo/data/configdb目录挂载到容器的/data/configdb</em></strong></p>
+</li>
+<li><strong><em>==-v /home/docker_home/mongo/data/db:/data/db==：将宿主机/home/docker_home/mongo/data/db目录挂载到容器的/data/db</em></strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps</span><br><span class="line">&lt;!--存在mongo的容器 运行正常--&gt;</span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<p>此时便可以在客户端使用shell或者MongoChef等工具进行远程访问</p>
+<h4 id="3-进入容器操作-1"><a href="#3-进入容器操作-1" class="headerlink" title="3. 进入容器操作"></a>3. 进入容器操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it mongo mongo admin</span><br><span class="line"></span><br><span class="line">db.createUser(&#123; user: &quot;admin&quot;, pwd: &quot;password&quot;, roles: [ &#123; role: &quot;userAdminAnyDatabase&quot;, db: &quot;admin&quot; &#125; ] &#125;);</span><br><span class="line"></span><br><span class="line">db.auth(&quot;admin&quot;, &quot;password&quot;);</span><br><span class="line"></span><br><span class="line">use test</span><br><span class="line"></span><br><span class="line">db.createUser(&#123; user: &quot;usertest&quot;, pwd: &quot;passwordtest&quot;, roles: [ &#123; role: &quot;readWrite&quot;, db: &quot;test&quot; &#125; ] &#125;);</span><br><span class="line"></span><br><span class="line">db.auth(&quot;usertest&quot;, &quot;passwordtest&quot;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="五-ubuntu下安装docker版redis"><a href="#五-ubuntu下安装docker版redis" class="headerlink" title="(五) ubuntu下安装docker版redis"></a>(五) ubuntu下安装docker版redis</h2><hr>
+<h4 id="1-使用下面的命令拉取Docker-Hub上的redis镜像"><a href="#1-使用下面的命令拉取Docker-Hub上的redis镜像" class="headerlink" title="1. 使用下面的命令拉取Docker Hub上的redis镜像"></a>1. 使用下面的命令拉取Docker Hub上的redis镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker search redis</span><br><span class="line">sudo docker pull redis:3.2</span><br></pre></td></tr></table></figure>
+<h4 id="2-启动redis的docker镜像，并设置相关参数"><a href="#2-启动redis的docker镜像，并设置相关参数" class="headerlink" title="2. 启动redis的docker镜像，并设置相关参数"></a>2. 启动redis的docker镜像，并设置相关参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -p 6379:6379 -v /home/docker_home/redis/data:/data  -d redis:3.2 redis-server --appendonly yes</span><br></pre></td></tr></table></figure>
+<p>命令说明：</p>
+<ul>
+<li><p><strong><em>==-p 6379:6379==：将容器的 6379 端口映射到主机的 6379 端口</em></strong></p>
+</li>
+<li><p><strong><em>==-v /home/docker_home/redis/data:/data==：将主机/home/docker_home/mongo/db目录挂载到容器的/data/db</em></strong></p>
+</li>
+<li><p><strong><em>==redis-server==：redis的启动命令</em></strong></p>
+</li>
+<li><p><strong><em>==–appendonly yes==：打开redis持久化配置</em></strong></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps</span><br><span class="line">&lt;!--存在redis的容器 运行正常--&gt;</span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<p>此时便可以在客户端使用shell等工具进行远程访问</p>
+<h4 id="3-进入容器操作-2"><a href="#3-进入容器操作-2" class="headerlink" title="3. 进入容器操作"></a>3. 进入容器操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo docker rename clever_northcutt redis</span><br><span class="line">有可能容器名称不是&apos;redis&apos;，可以通过docker rename 命令进行修改</span><br><span class="line"></span><br><span class="line">sudo docker exec -it redis redis-cli</span><br><span class="line">&lt;!--当然使用[CONTAINER ID]也可以--&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="六-ubuntu下安装mongoexpress-adminmongo"><a href="#六-ubuntu下安装mongoexpress-adminmongo" class="headerlink" title="(六) ubuntu下安装mongoexpress / adminmongo"></a>(六) ubuntu下安装mongoexpress / adminmongo</h2><hr>
+<h3 id="mongoexpress"><a href="#mongoexpress" class="headerlink" title="mongoexpress"></a>mongoexpress</h3><h4 id="1-使用下面的命令拉取Docker-Hub上的mongoexpress镜像"><a href="#1-使用下面的命令拉取Docker-Hub上的mongoexpress镜像" class="headerlink" title="1. 使用下面的命令拉取Docker Hub上的mongoexpress镜像"></a>1. 使用下面的命令拉取Docker Hub上的mongoexpress镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo-express</span><br></pre></td></tr></table></figure>
+<h4 id="2-启动mongoexpress的docker镜像，并设置相关参数"><a href="#2-启动mongoexpress的docker镜像，并设置相关参数" class="headerlink" title="2. 启动mongoexpress的docker镜像，并设置相关参数"></a>2. 启动mongoexpress的docker镜像，并设置相关参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run --link mongo:mongo --name mongoexpress -p 8081:8081 -e ME_CONFIG_BASICAUTH_USERNAME=&quot;root&quot; -e ME_CONFIG_BASICAUTH_PASSWORD=&quot;your_password&quot;  -d  mongo-express</span><br><span class="line"></span><br><span class="line">docker run --restart=always --name mongoexpress --link mongo:mongo -d -p 8081:8081 \</span><br><span class="line">-e ME_CONFIG_OPTIONS_EDITORTHEME=&quot;3024-night&quot; \</span><br><span class="line">-e ME_CONFIG_BASICAUTH_USERNAME=&quot;basic_username&quot; \</span><br><span class="line">-e ME_CONFIG_BASICAUTH_PASSWORD=&quot;basic_password&quot; \</span><br><span class="line">-e ME_CONFIG_MONGODB_ADMINUSERNAME=&quot;db_username&quot; \</span><br><span class="line">-e ME_CONFIG_MONGODB_ADMINPASSWORD=&quot;db_password&quot; \</span><br><span class="line">mongo-express</span><br></pre></td></tr></table></figure>
+<p>命令说明：</p>
+<ul>
+<li><strong><em>==–link mongo:mongo9==：与当前机器上的mongo镜像关联 才能连接到当前服务器上的mongodb</em></strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps</span><br><span class="line">&lt;!--存在mongoexpres的容器 运行正常--&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="adminmongo"><a href="#adminmongo" class="headerlink" title="adminmongo"></a>adminmongo</h3><h4 id="1-使用下面的命令拉取Docker-Hub上的adminmongo镜像"><a href="#1-使用下面的命令拉取Docker-Hub上的adminmongo镜像" class="headerlink" title="1. 使用下面的命令拉取Docker Hub上的adminmongo镜像"></a>1. 使用下面的命令拉取Docker Hub上的adminmongo镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mrvautin/adminmongo</span><br></pre></td></tr></table></figure>
+<h4 id="2-启动adminmongo的docker镜像，并设置相关参数"><a href="#2-启动adminmongo的docker镜像，并设置相关参数" class="headerlink" title="2. 启动adminmongo的docker镜像，并设置相关参数"></a>2. 启动adminmongo的docker镜像，并设置相关参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -e HOST=0.0.0.0 -e PASSWORD=&quot;your_password&quot;  -e LOCALE=&quot;zh-cn&quot; -p 1234:1234 -v /home/docker_home/adminmongo/config:/app/user/config  --name=&quot;adminmongo&quot; mrvautin/adminmongo</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps</span><br><span class="line">&lt;!--存在mongoexpres的容器 运行正常--&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="3-进入容器操作-3"><a href="#3-进入容器操作-3" class="headerlink" title="3. 进入容器操作"></a>3. 进入容器操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it adminmongo sh</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="八-ubuntu下安装Yapi"><a href="#八-ubuntu下安装Yapi" class="headerlink" title="(八) ubuntu下安装Yapi"></a>(八) ubuntu下安装Yapi</h2><h3 id="方法一：-使用开源镜像"><a href="#方法一：-使用开源镜像" class="headerlink" title="方法一： 使用开源镜像"></a>方法一： 使用开源镜像</h3><hr>
+<h4 id="1-获取-Yapi-镜像，版本信息可在-阿里云镜像仓库-查看"><a href="#1-获取-Yapi-镜像，版本信息可在-阿里云镜像仓库-查看" class="headerlink" title="1. 获取 Yapi 镜像，版本信息可在 阿里云镜像仓库 查看"></a>1. 获取 Yapi 镜像，版本信息可在 阿里云镜像仓库 查看</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</span><br></pre></td></tr></table></figure>
+<h4 id="2-初始化-Yapi-数据库索引及管理员账号"><a href="#2-初始化-Yapi-数据库索引及管理员账号" class="headerlink" title="2. 初始化 Yapi 数据库索引及管理员账号"></a>2. 初始化 Yapi 数据库索引及管理员账号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --link mongo:mongo --entrypoint npm --workdir /api/vendors registry.cn-hangzhou.aliyuncs.com/anoy/yapi run install-server</span><br><span class="line"></span><br><span class="line">&lt;!--自定义配置文件挂载到目录 /api/config.json，官方自定义配置文件--&gt;</span><br><span class="line">&lt;!--https://github.com/YMFE/yapi/blob/master/config_example.json--&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="3-启动-Yapi-服务"><a href="#3-启动-Yapi-服务" class="headerlink" title="3. 启动 Yapi 服务"></a>3. 启动 Yapi 服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name yapi  --link mongo:mongo --workdir /api/vendors -p 8082:3000 registry.cn-hangzhou.aliyuncs.com/anoy/yapi server/app.js</span><br></pre></td></tr></table></figure>
+<h4 id="4-使用-Yapi"><a href="#4-使用-Yapi" class="headerlink" title="4. 使用 Yapi"></a>4. 使用 Yapi</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--访问 http://ip:8082 登录账号 admin@admin.com，密码 ymfe.org--&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="方法二：-自己构建镜像（基于Yapi的GitHub项目）"><a href="#方法二：-自己构建镜像（基于Yapi的GitHub项目）" class="headerlink" title="方法二： 自己构建镜像（基于Yapi的GitHub项目）"></a>方法二： 自己构建镜像（基于Yapi的<a href="https://github.com/YMFE/yapi" target="_blank" rel="noopener">GitHub项目</a>）</h3><hr>
+<h4 id="1-生成一个Yapi项目"><a href="#1-生成一个Yapi项目" class="headerlink" title="1. 生成一个Yapi项目"></a>1. 生成一个Yapi项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g yapi-cli --registry https://registry.npm.taobao.org</span><br><span class="line">yapi server</span><br></pre></td></tr></table></figure>
+<h4 id="2-在浏览器打开-http-0-0-0-0-9090-访问。非本地服务器，请将-0-0-0-0-替换成指定的域名或ip-并按需填写其他信息"><a href="#2-在浏览器打开-http-0-0-0-0-9090-访问。非本地服务器，请将-0-0-0-0-替换成指定的域名或ip-并按需填写其他信息" class="headerlink" title="2. 在浏览器打开 http://0.0.0.0:9090 访问。非本地服务器，请将 0.0.0.0 替换成指定的域名或ip, 并按需填写其他信息"></a>2. 在浏览器打开 <a href="http://0.0.0.0:9090" target="_blank" rel="noopener">http://0.0.0.0:9090</a> 访问。非本地服务器，请将 0.0.0.0 替换成指定的域名或ip, 并按需填写其他信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">初始化管理员账号成功,账号名：&quot;你填写的账户名&quot;，默认密码：&quot;ymfe.org&quot;</span><br><span class="line"></span><br><span class="line">部署成功，请切换到部署目录，输入： &quot;node vendors/server/app.js&quot; 指令启动服务器, 然后在浏览器打开 http://127.0.0.1:3000 访问</span><br><span class="line"></span><br><span class="line">测试成功 清空yapi数据库</span><br></pre></td></tr></table></figure>
+<h4 id="3-删除无用文件"><a href="#3-删除无用文件" class="headerlink" title="3. 删除无用文件"></a>3. 删除无用文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf .init.lock </span><br><span class="line">// 这个是用没有初始化过的标识，因为刚才已经初始化过了，所以必须要删除它，否则制作成镜像并且启动时不会再执行初始化</span><br><span class="line"></span><br><span class="line">sudo rm -rf log</span><br></pre></td></tr></table></figure>
+<h4 id="4-config-json配置"><a href="#4-config-json配置" class="headerlink" title="4. config.json配置"></a>4. config.json配置</h4><p>可以看到根目录下的config.json中包含了我们刚才在第2步中填写的一些信息，如果有想修改的，可以进行编辑</p>
+<h4 id="5-编写Dockerfile用于构建镜像-比如："><a href="#5-编写Dockerfile用于构建镜像-比如：" class="headerlink" title="5. 编写Dockerfile用于构建镜像 比如："></a>5. 编写Dockerfile用于构建镜像 比如：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 设置基础镜像,如果没有该镜像，会从Docker.io服务器pull镜像</span><br><span class="line"># 指定我们的基础镜像是node，版本是v10.9.0</span><br><span class="line">FROM node:10.9.0</span><br><span class="line"># 在服务器根目录下创建/home/service目录</span><br><span class="line">RUN mkdir -p /home/service</span><br><span class="line"># 相当于 cd 到 /home/service目录</span><br><span class="line">WORKDIR /home/service</span><br><span class="line"></span><br><span class="line"># 拷贝所有源代码到工作目录</span><br><span class="line">COPY . /home/service</span><br><span class="line"># 暴露容器端口</span><br><span class="line">EXPOSE 8082</span><br><span class="line"># 启动node应用</span><br><span class="line">CMD node vendors/server/install.js &amp; node vendors/server/app.js</span><br></pre></td></tr></table></figure>
+<p>其中node vendors/server/install.js这一句就是执行初始化，它会把config.json的配置全部入库到你在config.json中指定的数据库</p>
+<h4 id="6-构建镜像并上传到你的dockerhub-自己注册一个dockerhub账号"><a href="#6-构建镜像并上传到你的dockerhub-自己注册一个dockerhub账号" class="headerlink" title="6. 构建镜像并上传到你的dockerhub(自己注册一个dockerhub账号)"></a>6. 构建镜像并上传到你的dockerhub(自己注册一个dockerhub账号)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker build -t [image_name] .</span><br><span class="line"></span><br><span class="line">docker tag [image_name] [dockerhub_name]/[image_name]:[tag]</span><br><span class="line">// 因为要上传到dockerhub必须保持[dockerhub_name]/[image_name]:[tag]的形式 所以这里要docker tag 执行一下</span><br><span class="line">// 当然也可以在docker build的时候直接写成这种形式 就不用docker tag了 更省事</span><br><span class="line">// docker tag实际上是将原镜像复制一份 再将复制的这份重命名了</span><br><span class="line"></span><br><span class="line">docker login // 终端登陆dockerhub</span><br><span class="line"></span><br><span class="line">docker push [dockerhub_name]/[image_name]:[tag] // 提交到dockerhub</span><br></pre></td></tr></table></figure>
+<h4 id="7-使用镜像"><a href="#7-使用镜像" class="headerlink" title="7. 使用镜像"></a>7. 使用镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull [dockerhub_name]/[image_name]:[tag]</span><br><span class="line">docker run -d --name [container_name] -p 8082:8082 [dockerhub_name]/[image_name]:[tag]</span><br></pre></td></tr></table></figure>
+<hr>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://roy-cook.tech/自动化/持续集成/posts/14787.html" data-id="ckqc1j5do000hmr9vzat1f5bg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "RoyCook"
+        },
+        "headline": "Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装",
+        "image": "https://roy-cook.techhttps://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg",
+        "keywords": "持续集成 自动化",
+        "genre": "自动化 持续集成",
+        "datePublished": "2019-03-01",
+        "dateCreated": "2019-03-01",
+        "dateModified": "2021-06-25",
+        "url": "https://roy-cook.tech/自动化/持续集成/posts/14787.html",
+        "description": "
+常用镜像安装准备
+1. 安装任务列表
+
+
+应用程序
+对应端口映射 （本机：docker容器）
+
+
+
+
+jenkins
+8080  ： 8080         
+
+
+mysql
+3306  ： 3306        
+
+
+mongo
+27017 ： 27017      
+
+
+redis
+6379  ： 6379      
+
+
+nginx
+8765  ： 80      
+
+
+
+2. 在阿里"
+        "wordCount": 1607
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="valine-thread"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/RoyCook123" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/profile.php?id=100028962664645" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://mashable.com/category/google-plus/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/RoyLH" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="https://weibo.com/u/3179353285" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/自动化/持续集成/posts/860.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/Web前端/JavaScript/posts/61442.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">自行实现一个Promise</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/APP/React-Native/posts/41590.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://hackernoon.com/hn-images/1*ub1DguhAtkCLvhUGuVGr6w.png)" alt="React Native学习大纲" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/APP/">APP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/APP/React-Native/">React Native</a></p>
+                            <p class="item-title"><a href="/APP/React-Native/posts/41590.html" class="title">React Native学习大纲</a></p>
+                            <p class="item-date"><time datetime="2021-06-25T07:44:13.720Z" itemprop="datePublished">2021-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/WEB安全/SSL/posts/5325.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://sslcity.com/wp-content/uploads/2019/03/ssl.png)" alt="SSL" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/WEB安全/">WEB安全</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/WEB安全/SSL/">SSL</a></p>
+                            <p class="item-title"><a href="/WEB安全/SSL/posts/5325.html" class="title">SSL</a></p>
+                            <p class="item-date"><time datetime="2021-06-25T07:44:13.720Z" itemprop="datePublished">2021-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/版本控制/Git/posts/25246.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://cdn-images-1.medium.com/max/800/1*TnsFDs-DEye722CrQXjv8w.png)" alt="Git" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/版本控制/">版本控制</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/版本控制/Git/">Git</a></p>
+                            <p class="item-title"><a href="/版本控制/Git/posts/25246.html" class="title">Git</a></p>
+                            <p class="item-date"><time datetime="2021-06-25T07:44:13.719Z" itemprop="datePublished">2021-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/Node-js/posts/34574.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.fundebug.com/2019-01-14-004.png)" alt="EventLoop" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/Node-js/posts/34574.html" class="title">EventLoop</a></p>
+                            <p class="item-date"><time datetime="2021-05-19T07:11:26.000Z" itemprop="datePublished">2021-05-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/APP/posts/14059.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.gadgets360cdn.com/large/apps_main_1558084081800.jpg?output-quality=80&amp;output-format=webp)" alt="H5唤端" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/APP/">APP</a></p>
+                            <p class="item-title"><a href="/APP/posts/14059.html" class="title">H5唤端</a></p>
+                            <p class="item-date"><time datetime="2019-09-12T04:08:03.000Z" itemprop="datePublished">2019-09-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/APP/">APP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/APP/React-Native/">React Native</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/">WEB安全</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/SSL/">SSL</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web前端/">Web前端</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web前端/JavaScript/">JavaScript</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端自动化/">前端自动化</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端自动化/前端工程化/">前端工程化</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端自动化/前端工程化/持续集成/">持续集成</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客搭建/">博客搭建</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/自动化/">自动化</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/自动化/持续集成/">持续集成</a><span class="category-list-count">2</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/APP/">APP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Native/">React Native</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSL/">SSL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端工程化/">前端工程化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端自动化/">前端自动化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客搭建/">博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/持续集成/">持续集成</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/版本控制/">版本控制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化/">自动化</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/APP/" style="font-size: 15px;">APP</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/React-Native/" style="font-size: 10px;">React Native</a> <a href="/tags/SSL/" style="font-size: 10px;">SSL</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/前端工程化/" style="font-size: 15px;">前端工程化</a> <a href="/tags/前端自动化/" style="font-size: 15px;">前端自动化</a> <a href="/tags/博客搭建/" style="font-size: 10px;">博客搭建</a> <a href="/tags/持续集成/" style="font-size: 20px;">持续集成</a> <a href="/tags/版本控制/" style="font-size: 10px;">版本控制</a> <a href="/tags/自动化/" style="font-size: 15px;">自动化</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 RoyCook</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+
+                <!--这一段是不蒜子的网站访问量-->
+                <span id="busuanzi_container_site_pv">
+                    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+                </span>
+                <span id="busuanzi_container_site_uv">
+                    访客数<span id="busuanzi_value_site_uv"></span>人次
+                </span>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+<!--这一段是不蒜子的访问量统计脚本-->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var APP_ID = '7ec1wQwAA8MKNjVDnXDbBRtx-gzGzoHsz';
+    var APP_KEY = 'IPesc54T2AsK2QX09b2NjVcA';
+    AV.init({
+        appId: APP_ID,
+        appKey: APP_KEY
+    });
+    // 显示次数
+    function showTime(Counter) {
+        var query = new AV.Query("Counter");
+        if ($(".leancloud_visitors").length > 0) {
+            var url = $(".leancloud_visitors").attr('id').trim();
+            // where field
+            query.equalTo("words", url);
+            // count
+            query.count().then(function (number) {
+                // There are number instances of MyClass where words equals url.
+                $(document.getElementById(url)).text(number ? number : '--');
+            }, function (error) {
+                // error is an instance of AVError.
+            });
+        }
+    }
+    // 追加pv
+    function addCount(Counter) {
+        var url = $(".leancloud_visitors").length > 0 ? $(".leancloud_visitors").attr('id').trim() : 'icafebolger.com';
+        var Counter = AV.Object.extend("Counter");
+        var query = new Counter;
+        query.save({
+            words: url
+        }).then(function (object) {})
+    }
+    $(function () {
+        var Counter = AV.Object.extend("Counter");
+        addCount(Counter);
+        showTime(Counter);
+    });
+</script>
+
+        
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#valine-thread' ,
+            notify:false,
+            verify:false,
+            app_id: '7ec1wQwAA8MKNjVDnXDbBRtx-gzGzoHsz',
+            app_key: 'IPesc54T2AsK2QX09b2NjVcA',
+            placeholder: 'Just Do It',
+            pageSize: '10',
+            avatar: 'identicon',
+            avatar_cdn:  'https://gravatar.loli.net/avatar/'
+        });
+    </script>
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

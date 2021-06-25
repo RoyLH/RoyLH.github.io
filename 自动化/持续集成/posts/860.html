@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+
+    
+
+    
+    <title>Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境 | RoyCook的个人博客 | 前端 node.js</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="持续集成,自动化">
+    
+    <meta name="description" content="你需要准备的环境（这里以阿里云ECS Ubuntu 16.04 为例）  服务器： 阿里云服务器ECS 操作系统:    Ubuntu 16.04   (一) 修改阿里云ECS默认主机名 需要修改两处： 1234567vi /etc/hostname&amp;lt;!--将其对应的主机名修改为新的主机名--&amp;gt;vi /etc/hosts&amp;lt;!--需要将 /etc/hosts 中 127.0.0.">
+<meta name="keywords" content="持续集成,自动化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境">
+<meta property="og:url" content="https://roy-cook.tech/自动化/持续集成/posts/860.html">
+<meta property="og:site_name" content="RoyCook的个人博客 | 前端 node.js">
+<meta property="og:description" content="你需要准备的环境（这里以阿里云ECS Ubuntu 16.04 为例）  服务器： 阿里云服务器ECS 操作系统:    Ubuntu 16.04   (一) 修改阿里云ECS默认主机名 需要修改两处： 1234567vi /etc/hostname&amp;lt;!--将其对应的主机名修改为新的主机名--&amp;gt;vi /etc/hosts&amp;lt;!--需要将 /etc/hosts 中 127.0.0.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg">
+<meta property="og:updated_time" content="2021-06-25T07:44:13.721Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境">
+<meta name="twitter:description" content="你需要准备的环境（这里以阿里云ECS Ubuntu 16.04 为例）  服务器： 阿里云服务器ECS 操作系统:    Ubuntu 16.04   (一) 修改阿里云ECS默认主机名 需要修改两处： 1234567vi /etc/hostname&amp;lt;!--将其对应的主机名修改为新的主机名--&amp;gt;vi /etc/hosts&amp;lt;!--需要将 /etc/hosts 中 127.0.0.">
+<meta name="twitter:image" content="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="RoyCook的个人博客 | 前端 node.js" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+    <!-- 百度统计 -->
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e54e26d9b98587550b2ed7dcf4ebf657";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+</html>
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">RoyCook&#39;s coding world!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/APP/">APP</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/APP/React-Native/">React Native</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Node-js/">Node.js</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/">WEB安全</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/SSL/">SSL</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web前端/">Web前端</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web前端/JavaScript/">JavaScript</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/前端自动化/">前端自动化</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/前端自动化/前端工程化/">前端工程化</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/博客搭建/">博客搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/版本控制/">版本控制</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/版本控制/Git/">Git</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/自动化/">自动化</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/自动化/持续集成/">持续集成</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/自动化/">自动化</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/自动化/持续集成/">持续集成</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-自动化构建1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/自动化/持续集成/posts/860.html" class="article-date">
+            <time datetime="2019-03-01T03:27:52.000Z" itemprop="datePublished">2019-03-01</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/持续集成/">持续集成</a>, <a class="tag-link" href="/tags/自动化/">自动化</a>
+    </div>
+
+                <!---方法一 leancloud阅读量统计系统-->
+                阅读数量:<span id="/自动化/持续集成/posts/860.html" class="leancloud_visitors" data-flag-title="Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境"></span>次
+
+                <!--方法二 不蒜子单页面访问量统计 也就是该文章的阅读量-->
+                <!-- <span id="busuanzi_container_page_pv">
+                    阅读量<span id="busuanzi_value_page_pv"></span>次
+                </span> -->
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg" alt></p>
+<h2 id="你需要准备的环境（这里以阿里云ECS-Ubuntu-16-04-为例）"><a href="#你需要准备的环境（这里以阿里云ECS-Ubuntu-16-04-为例）" class="headerlink" title="你需要准备的环境（这里以阿里云ECS Ubuntu 16.04 为例）"></a>你需要准备的环境（这里以阿里云ECS Ubuntu 16.04 为例）</h2><hr>
+<ul>
+<li>服务器： 阿里云服务器ECS</li>
+<li>操作系统:    Ubuntu 16.04</li>
+</ul>
+<hr>
+<h2 id="一-修改阿里云ECS默认主机名"><a href="#一-修改阿里云ECS默认主机名" class="headerlink" title="(一) 修改阿里云ECS默认主机名"></a>(一) 修改阿里云ECS默认主机名</h2><hr>
+<p>需要修改两处：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/hostname</span><br><span class="line">&lt;!--将其对应的主机名修改为新的主机名--&gt;</span><br><span class="line"></span><br><span class="line">vi /etc/hosts</span><br><span class="line">&lt;!--需要将 /etc/hosts 中 127.0.0.1 对应的老主机名更换为新的主机名--&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--重启服务器生效--&gt;</span><br></pre></td></tr></table></figure>
+<p>修改完毕后重新 shell 登录即可</p>
+<hr>
+<h2 id="二-为Ubuntu系统添加新的普通用户"><a href="#二-为Ubuntu系统添加新的普通用户" class="headerlink" title="(二) 为Ubuntu系统添加新的普通用户"></a>(二) 为Ubuntu系统添加新的普通用户</h2><hr>
+<p>在使用Ubuntu系统的过程中，一般不建议直接使用root用户，建议新建一个或多个普通用户，平时的操作都使用普通用户登录Ubuntu系统。</p>
+<p>使用root用户登录Ubuntu系统以后，打开一个终端，在终端中执行如下Shell命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo useradd -m roy -s /bin/bash</span><br></pre></td></tr></table></figure>
+<p>这条命令创建了可以登陆的 linziyu 用户，并使用 /bin/bash 作为 shell</p>
+<p>接着使用如下命令为这个新用户设置密码，请按系统提示输入两次密码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd roy</span><br></pre></td></tr></table></figure>
+<p>可为roy 用户增加管理员权限，方便部署，避免一些对新手来说比较棘手的权限问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser roy sudo</span><br></pre></td></tr></table></figure>
+<p>然后，把登录用户从root用户切换到roy用户，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su roy</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="三-创建ssh公、私钥-使用root用户"><a href="#三-创建ssh公、私钥-使用root用户" class="headerlink" title="(三) 创建ssh公、私钥 (使用root用户)"></a>(三) 创建ssh公、私钥 (使用root用户)</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your@email.com&quot;</span><br></pre></td></tr></table></figure>
+<p>连续回车三次即可</p>
+<hr>
+<h2 id="四-安装docker环境"><a href="#四-安装docker环境" class="headerlink" title="(四) 安装docker环境"></a>(四) 安装docker环境</h2><hr>
+<h4 id="1-卸载旧版本docker-全新安装时，无需执行该步骤"><a href="#1-卸载旧版本docker-全新安装时，无需执行该步骤" class="headerlink" title="1. 卸载旧版本docker(全新安装时，无需执行该步骤)"></a>1. 卸载旧版本docker(全新安装时，无需执行该步骤)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove docker docker-engine docker.io</span><br></pre></td></tr></table></figure>
+<h4 id="2-更新系统软件"><a href="#2-更新系统软件" class="headerlink" title="2. 更新系统软件"></a>2. 更新系统软件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<h4 id="3-安装依赖包"><a href="#3-安装依赖包" class="headerlink" title="3. 安装依赖包"></a>3. 安装依赖包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure>
+<h3 id="4-添加Docker官方的GPG密钥"><a href="#4-添加Docker官方的GPG密钥" class="headerlink" title="4. 添加Docker官方的GPG密钥"></a>4. 添加Docker官方的GPG密钥</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">&lt;!--显示OK,表示添加成功.--&gt;</span><br><span class="line">&lt;!--执行该命令时，如遇到长时间没有响应说明网络连接不到docker网站，需要使用代理进行--&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="5-添加设置stable存储库"><a href="#5-添加设置stable存储库" class="headerlink" title="5. 添加设置stable存储库"></a>5. 添加设置stable存储库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="6-再更新一下apt包索引"><a href="#6-再更新一下apt包索引" class="headerlink" title="6. 再更新一下apt包索引"></a>6. 再更新一下apt包索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<h4 id="7-再更新一下apt包索引"><a href="#7-再更新一下apt包索引" class="headerlink" title="7. 再更新一下apt包索引"></a>7. 再更新一下apt包索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install docker-ce</span><br><span class="line"></span><br><span class="line">&lt;!--在生产系统上，可能会需要应该安装一个特定版本的Docker CE，而不是总是使用最新版本：--&gt;</span><br><span class="line">&lt;!--apt-cache madison docker-ce--&gt; &lt;!--列出可用的版本--&gt;</span><br><span class="line">&lt;!--sudo apt-get install docker-ce=&lt;VERSION&gt;--&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="8-验证docker"><a href="#8-验证docker" class="headerlink" title="8. 验证docker"></a>8. 验证docker</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--查看docker版本：--&gt;</span><br><span class="line">docker -v</span><br><span class="line">&lt;!--Docker version 18.06.1-ce, build e68fc7a--&gt; &lt;!--出现类似以上信息代表安装成功--&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--查看docker服务是否启动：--&gt;</span><br><span class="line">systemctl status docker</span><br><span class="line"></span><br><span class="line">&lt;!--若未启动，则启动docker服务：--&gt;</span><br><span class="line">sudo systemctl start docker</span><br><span class="line"></span><br><span class="line">&lt;!--hello world测试：--&gt;</span><br><span class="line">sudo docker run hello-world</span><br><span class="line">&lt;!--若是出现Hello from Docker字样代表成功 --&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="9-docker-compose安装"><a href="#9-docker-compose安装" class="headerlink" title="9. docker-compose安装"></a>9. docker-compose安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line">docker-compose --version</span><br><span class="line">&lt;!--docker-compose version 1.22.0, build f46880fe--&gt;</span><br><span class="line">&lt;!--出现上述字样代表安装成功--&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://roy-cook.tech/自动化/持续集成/posts/860.html" data-id="ckqc1j5dj000gmr9vpmlbalf0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "RoyCook"
+        },
+        "headline": "Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境",
+        "image": "https://roy-cook.techhttps://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;fm=26&amp;gp=0.jpg",
+        "keywords": "持续集成 自动化",
+        "genre": "自动化 持续集成",
+        "datePublished": "2019-03-01",
+        "dateCreated": "2019-03-01",
+        "dateModified": "2021-06-25",
+        "url": "https://roy-cook.tech/自动化/持续集成/posts/860.html",
+        "description": "
+你需要准备的环境（这里以阿里云ECS Ubuntu 16.04 为例）
+
+服务器： 阿里云服务器ECS
+操作系统:    Ubuntu 16.04
+
+
+(一) 修改阿里云ECS默认主机名
+需要修改两处：
+1234567vi /etc/hostname&lt;!--将其对应的主机名修改为新的主机名--&gt;vi /etc/hosts&lt;!--需要将 /etc/hosts 中 127.0.0."
+        "wordCount": 352
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="valine-thread"></div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/RoyCook123" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/profile.php?id=100028962664645" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="https://mashable.com/category/google-plus/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/RoyLH" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="https://weibo.com/u/3179353285" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/前端自动化/前端工程化/持续集成/posts/860.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            前端自动化---Gulp
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/自动化/持续集成/posts/14787.html" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/APP/React-Native/posts/41590.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://hackernoon.com/hn-images/1*ub1DguhAtkCLvhUGuVGr6w.png)" alt="React Native学习大纲" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/APP/">APP</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/APP/React-Native/">React Native</a></p>
+                            <p class="item-title"><a href="/APP/React-Native/posts/41590.html" class="title">React Native学习大纲</a></p>
+                            <p class="item-date"><time datetime="2021-06-25T07:44:13.720Z" itemprop="datePublished">2021-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/WEB安全/SSL/posts/5325.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://sslcity.com/wp-content/uploads/2019/03/ssl.png)" alt="SSL" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/WEB安全/">WEB安全</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/WEB安全/SSL/">SSL</a></p>
+                            <p class="item-title"><a href="/WEB安全/SSL/posts/5325.html" class="title">SSL</a></p>
+                            <p class="item-date"><time datetime="2021-06-25T07:44:13.720Z" itemprop="datePublished">2021-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/版本控制/Git/posts/25246.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://cdn-images-1.medium.com/max/800/1*TnsFDs-DEye722CrQXjv8w.png)" alt="Git" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/版本控制/">版本控制</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/版本控制/Git/">Git</a></p>
+                            <p class="item-title"><a href="/版本控制/Git/posts/25246.html" class="title">Git</a></p>
+                            <p class="item-date"><time datetime="2021-06-25T07:44:13.719Z" itemprop="datePublished">2021-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/Node-js/posts/34574.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://image.fundebug.com/2019-01-14-004.png)" alt="EventLoop" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Node-js/">Node.js</a></p>
+                            <p class="item-title"><a href="/Node-js/posts/34574.html" class="title">EventLoop</a></p>
+                            <p class="item-date"><time datetime="2021-05-19T07:11:26.000Z" itemprop="datePublished">2021-05-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/APP/posts/14059.html" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i.gadgets360cdn.com/large/apps_main_1558084081800.jpg?output-quality=80&amp;output-format=webp)" alt="H5唤端" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/APP/">APP</a></p>
+                            <p class="item-title"><a href="/APP/posts/14059.html" class="title">H5唤端</a></p>
+                            <p class="item-date"><time datetime="2019-09-12T04:08:03.000Z" itemprop="datePublished">2019-09-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/APP/">APP</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/APP/React-Native/">React Native</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/">WEB安全</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/SSL/">SSL</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web前端/">Web前端</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web前端/JavaScript/">JavaScript</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端自动化/">前端自动化</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端自动化/前端工程化/">前端工程化</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端自动化/前端工程化/持续集成/">持续集成</a><span class="category-list-count">2</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/博客搭建/">博客搭建</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/自动化/">自动化</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/自动化/持续集成/">持续集成</a><span class="category-list-count">2</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/APP/">APP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Native/">React Native</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSL/">SSL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端工程化/">前端工程化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端自动化/">前端自动化</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/博客搭建/">博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/持续集成/">持续集成</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/版本控制/">版本控制</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化/">自动化</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/APP/" style="font-size: 15px;">APP</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/React-Native/" style="font-size: 10px;">React Native</a> <a href="/tags/SSL/" style="font-size: 10px;">SSL</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/前端工程化/" style="font-size: 15px;">前端工程化</a> <a href="/tags/前端自动化/" style="font-size: 15px;">前端自动化</a> <a href="/tags/博客搭建/" style="font-size: 10px;">博客搭建</a> <a href="/tags/持续集成/" style="font-size: 20px;">持续集成</a> <a href="/tags/版本控制/" style="font-size: 10px;">版本控制</a> <a href="/tags/自动化/" style="font-size: 15px;">自动化</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 RoyCook</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+
+                <!--这一段是不蒜子的网站访问量-->
+                <span id="busuanzi_container_site_pv">
+                    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+                </span>
+                <span id="busuanzi_container_site_uv">
+                    访客数<span id="busuanzi_value_site_uv"></span>人次
+                </span>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+<!--这一段是不蒜子的访问量统计脚本-->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var APP_ID = '7ec1wQwAA8MKNjVDnXDbBRtx-gzGzoHsz';
+    var APP_KEY = 'IPesc54T2AsK2QX09b2NjVcA';
+    AV.init({
+        appId: APP_ID,
+        appKey: APP_KEY
+    });
+    // 显示次数
+    function showTime(Counter) {
+        var query = new AV.Query("Counter");
+        if ($(".leancloud_visitors").length > 0) {
+            var url = $(".leancloud_visitors").attr('id').trim();
+            // where field
+            query.equalTo("words", url);
+            // count
+            query.count().then(function (number) {
+                // There are number instances of MyClass where words equals url.
+                $(document.getElementById(url)).text(number ? number : '--');
+            }, function (error) {
+                // error is an instance of AVError.
+            });
+        }
+    }
+    // 追加pv
+    function addCount(Counter) {
+        var url = $(".leancloud_visitors").length > 0 ? $(".leancloud_visitors").attr('id').trim() : 'icafebolger.com';
+        var Counter = AV.Object.extend("Counter");
+        var query = new Counter;
+        query.save({
+            words: url
+        }).then(function (object) {})
+    }
+    $(function () {
+        var Counter = AV.Object.extend("Counter");
+        addCount(Counter);
+        showTime(Counter);
+    });
+</script>
+
+        
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#valine-thread' ,
+            notify:false,
+            verify:false,
+            app_id: '7ec1wQwAA8MKNjVDnXDbBRtx-gzGzoHsz',
+            app_key: 'IPesc54T2AsK2QX09b2NjVcA',
+            placeholder: 'Just Do It',
+            pageSize: '10',
+            avatar: 'identicon',
+            avatar_cdn:  'https://gravatar.loli.net/avatar/'
+        });
+    </script>
+
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

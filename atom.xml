@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>RoyCook的个人博客 | 前端 node.js</title>
+  
+  <subtitle>RoyCook&#39;s coding world!</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://roy-cook.tech/"/>
+  <updated>2021-06-25T07:44:13.720Z</updated>
+  <id>https://roy-cook.tech/</id>
+  
+  <author>
+    <name>RoyCook</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>React Native学习大纲</title>
+    <link href="https://roy-cook.tech/APP/React-Native/posts/41590.html"/>
+    <id>https://roy-cook.tech/APP/React-Native/posts/41590.html</id>
+    <published>2021-06-25T07:44:13.720Z</published>
+    <updated>2021-06-25T07:44:13.720Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://hackernoon.com/hn-images/1*ub1DguhAtkCLvhUGuVGr6w.png&quot; alt&gt;&lt;/p&gt;
+&lt;h5 id=&quot;react基础&quot;&gt;&lt;a href=&quot;#react基础&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="APP" scheme="https://roy-cook.tech/categories/APP/"/>
+    
+      <category term="React Native" scheme="https://roy-cook.tech/categories/APP/React-Native/"/>
+    
+    
+      <category term="APP" scheme="https://roy-cook.tech/tags/APP/"/>
+    
+      <category term="React Native" scheme="https://roy-cook.tech/tags/React-Native/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SSL</title>
+    <link href="https://roy-cook.tech/WEB%E5%AE%89%E5%85%A8/SSL/posts/5325.html"/>
+    <id>https://roy-cook.tech/WEB安全/SSL/posts/5325.html</id>
+    <published>2021-06-25T07:44:13.720Z</published>
+    <updated>2021-06-25T07:44:13.720Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://sslcity.com/wp-content/uploads/2019/03/ssl.png&quot; alt&gt;&lt;/p&gt;
+&lt;h2 id=&quot;什么是SSL&quot;&gt;&lt;a href=&quot;#什么是SSL&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="WEB安全" scheme="https://roy-cook.tech/categories/WEB%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="SSL" scheme="https://roy-cook.tech/categories/WEB%E5%AE%89%E5%85%A8/SSL/"/>
+    
+    
+      <category term="SSL" scheme="https://roy-cook.tech/tags/SSL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git</title>
+    <link href="https://roy-cook.tech/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/Git/posts/25246.html"/>
+    <id>https://roy-cook.tech/版本控制/Git/posts/25246.html</id>
+    <published>2021-06-25T07:44:13.719Z</published>
+    <updated>2021-06-25T07:44:13.719Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*TnsFDs-DEye722CrQXjv8w.png&quot; alt&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Git的使用&quot;&gt;&lt;a href=&quot;#Git的使用&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="版本控制" scheme="https://roy-cook.tech/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"/>
+    
+      <category term="Git" scheme="https://roy-cook.tech/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/Git/"/>
+    
+    
+      <category term="版本控制" scheme="https://roy-cook.tech/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"/>
+    
+      <category term="Git" scheme="https://roy-cook.tech/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>EventLoop</title>
+    <link href="https://roy-cook.tech/Node-js/posts/34574.html"/>
+    <id>https://roy-cook.tech/Node-js/posts/34574.html</id>
+    <published>2021-05-19T07:11:26.000Z</published>
+    <updated>2021-06-25T07:44:13.718Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://image.fundebug.com/2019-01-14-004.png&quot; alt&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Event-Loop是什么&quot;&gt;&lt;a href=&quot;#Event-Loop是什么&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://roy-cook.tech/categories/Node-js/"/>
+    
+    
+      <category term="Node.js" scheme="https://roy-cook.tech/tags/Node-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>H5唤端</title>
+    <link href="https://roy-cook.tech/APP/posts/14059.html"/>
+    <id>https://roy-cook.tech/APP/posts/14059.html</id>
+    <published>2019-09-12T04:08:03.000Z</published>
+    <updated>2021-06-25T07:44:13.719Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://i.gadgets360cdn.com/large/apps_main_1558084081800.jpg?output-quality=80&amp;amp;output-format=webp&quot; alt&gt;&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="APP" scheme="https://roy-cook.tech/categories/APP/"/>
+    
+    
+      <category term="APP" scheme="https://roy-cook.tech/tags/APP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端自动化---Grunt</title>
+    <link href="https://roy-cook.tech/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/posts/860.html"/>
+    <id>https://roy-cook.tech/前端自动化/前端工程化/持续集成/posts/860.html</id>
+    <published>2019-06-03T14:54:08.000Z</published>
+    <updated>2021-06-25T07:44:13.720Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+      <category term="前端自动化" scheme="https://roy-cook.tech/categories/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+      <category term="前端工程化" scheme="https://roy-cook.tech/categories/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/categories/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+    
+      <category term="前端自动化" scheme="https://roy-cook.tech/tags/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+      <category term="前端工程化" scheme="https://roy-cook.tech/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端自动化---Gulp</title>
+    <link href="https://roy-cook.tech/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/posts/860.html"/>
+    <id>https://roy-cook.tech/前端自动化/前端工程化/持续集成/posts/860.html</id>
+    <published>2019-06-03T14:54:08.000Z</published>
+    <updated>2021-06-25T07:44:13.720Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4249785218,3261689223&amp;amp;fm=26&amp;amp;gp=0.jpg&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="前端自动化" scheme="https://roy-cook.tech/categories/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+      <category term="前端工程化" scheme="https://roy-cook.tech/categories/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/categories/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+    
+      <category term="前端自动化" scheme="https://roy-cook.tech/tags/%E5%89%8D%E7%AB%AF%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+      <category term="前端工程化" scheme="https://roy-cook.tech/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins + docker + nginx 自动化构建搭建 (一) --- 配置基本环境</title>
+    <link href="https://roy-cook.tech/%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/posts/860.html"/>
+    <id>https://roy-cook.tech/自动化/持续集成/posts/860.html</id>
+    <published>2019-03-01T03:27:52.000Z</published>
+    <updated>2021-06-25T07:44:13.721Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;amp;fm=26&amp;amp;gp=0.jpg&quot; alt&gt;&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="自动化" scheme="https://roy-cook.tech/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+      <category term="自动化" scheme="https://roy-cook.tech/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins + docker + nginx 自动化构建搭建 (二) --- 常用软件安装</title>
+    <link href="https://roy-cook.tech/%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/posts/14787.html"/>
+    <id>https://roy-cook.tech/自动化/持续集成/posts/14787.html</id>
+    <published>2019-03-01T03:27:52.000Z</published>
+    <updated>2021-06-25T07:44:13.721Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1855844663,2646560550&amp;amp;fm=26&amp;amp;gp=0.jpg&quot; alt&gt;&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="自动化" scheme="https://roy-cook.tech/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+    
+      <category term="持续集成" scheme="https://roy-cook.tech/tags/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90/"/>
+    
+      <category term="自动化" scheme="https://roy-cook.tech/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自行实现一个Promise</title>
+    <link href="https://roy-cook.tech/Web%E5%89%8D%E7%AB%AF/JavaScript/posts/61442.html"/>
+    <id>https://roy-cook.tech/Web前端/JavaScript/posts/61442.html</id>
+    <published>2018-10-10T09:38:59.000Z</published>
+    <updated>2021-06-25T07:44:13.721Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;https://pic2.zhimg.com/v2-09b5dffffe94bf7c2f9c564d90769101_b.jpg&quot; alt&gt;&lt;/p&gt;
+&lt;h2 id=&quot;实现&quot;&gt;&lt;a href=&quot;#实现&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Web前端" scheme="https://roy-cook.tech/categories/Web%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="JavaScript" scheme="https://roy-cook.tech/categories/Web%E5%89%8D%E7%AB%AF/JavaScript/"/>
+    
+    
+      <category term="JavaScript" scheme="https://roy-cook.tech/tags/JavaScript/"/>
+    
+      <category term="Web前端" scheme="https://roy-cook.tech/tags/Web%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于博客搭建</title>
+    <link href="https://roy-cook.tech/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/posts/53510.html"/>
+    <id>https://roy-cook.tech/博客搭建/posts/53510.html</id>
+    <published>2018-09-04T05:38:44.000Z</published>
+    <updated>2021-06-25T07:44:13.721Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;data:image/png;base64,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&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;开个博客，写写东西。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="博客搭建" scheme="https://roy-cook.tech/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+    
+      <category term="博客搭建" scheme="https://roy-cook.tech/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+</feed>
